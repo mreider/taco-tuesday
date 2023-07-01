@@ -1,0 +1,35 @@
+name: custom:taco-delivery-counter
+version: 1.0.17
+minDynatraceVersion: 1.257.0
+author:
+  name: Matthew Reider
+screens:
+  - entityType: CLOUD_APPLICATION
+    detailsInjections:
+      - type: CHART_GROUP
+        key: orders
+        conditions:
+          - entityAttribute|entityName=orders
+    chartsCards:
+      - key: orders
+        displayName: Tacos deliveries
+        numberOfVisibleCharts: 2
+        charts:
+          - displayName: orders
+            visualizationType: GRAPH_CHART
+            graphChartConfig:
+              visualization:
+                themeColor: DEFAULT
+                seriesType: LINE
+              metrics:
+                - metricSelector: orders.count
+          - displayName: tacos delivered
+            visualizationType: GRAPH_CHART
+            graphChartConfig:
+              visualization:
+                themeColor: DEFAULT
+                seriesType: LINE
+              metrics:
+                - metricSelector: deliveries.count:splitBy("success")
+                  visualization:
+                    displayName: Success / Failure

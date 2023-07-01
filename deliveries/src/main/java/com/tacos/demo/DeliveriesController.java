@@ -16,11 +16,11 @@ public class DeliveriesController {
     @GetMapping("/")
 
     public ResponseEntity<String> rootEndpoint() {
-             if (ThreadLocalRandom.current().nextDouble() > 0.8) {
+             if (ThreadLocalRandom.current().nextDouble() > 0.05) {
                 log.info("Success");
                 return ResponseEntity.ok("Success");
             } else {
-                for (int i = 0; i < 10; i++) {
+                for (int i = 0; i < 40; i++) {
                     fibonacci(i);
                 }
                 log.error("Delivery down");
