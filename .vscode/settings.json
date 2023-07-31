@@ -1,4 +1,7 @@
 {
     "java.configuration.updateBuildConfiguration": "automatic",
-    "java.compile.nullAnalysis.mode": "automatic"
+    "java.compile.nullAnalysis.mode": "automatic",
+    "yaml.schemas": {
+        "/Users/matthew.reider/Library/Application Support/Code/User/globalStorage/dynatraceplatformextensions.dynatrace-extensions/1.265.0/extension.schema.json": "extension.yaml"
+    }
 }

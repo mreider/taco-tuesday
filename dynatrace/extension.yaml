@@ -33,3 +33,32 @@ screens:
                 - metricSelector: deliveries.count:splitBy("success")
                   visualization:
                     displayName: Success / Failure
+  - entityType: SERVICE
+    detailsInjections:
+      - type: CHART_GROUP
+        key: orders
+        conditions:
+          - entityAttribute|entityName=DeliveriesController
+    chartsCards:
+      - key: orders
+        displayName: Tacos deliveries
+        numberOfVisibleCharts: 2
+        charts:
+          - displayName: orders
+            visualizationType: GRAPH_CHART
+            graphChartConfig:
+              visualization:
+                themeColor: DEFAULT
+                seriesType: LINE
+              metrics:
+                - metricSelector: orders.count
+          - displayName: tacos delivered
+            visualizationType: GRAPH_CHART
+            graphChartConfig:
+              visualization:
+                themeColor: DEFAULT
+                seriesType: LINE
+              metrics:
+                - metricSelector: deliveries.count:splitBy("success")
+                  visualization:
+                    displayName: Success / Failure
