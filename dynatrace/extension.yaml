@@ -1,64 +1,66 @@
 name: custom:taco-delivery-counter
-version: 1.0.17
-minDynatraceVersion: 1.257.0
+version: 1.0.27
+minDynatraceVersion: 1.265.0
 author:
   name: Matthew Reider
 screens:
   - entityType: CLOUD_APPLICATION
     detailsInjections:
       - type: CHART_GROUP
-        key: orders
+        key: deliveries
         conditions:
-          - entityAttribute|entityName=orders
+          - entityAttribute|entityName=deliveries
     chartsCards:
-      - key: orders
+      - key: deliveries
         displayName: Tacos deliveries
         numberOfVisibleCharts: 2
-        charts:
-          - displayName: orders
+        charts: 
+          - displayName: Successful deliveries
             visualizationType: GRAPH_CHART
             graphChartConfig:
               visualization:
                 themeColor: DEFAULT
                 seriesType: LINE
               metrics:
-                - metricSelector: orders.count
-          - displayName: tacos delivered
+                - metricSelector: deliveries.count:filter(eq(success,true))
+          - displayName: Failed deliveries
             visualizationType: GRAPH_CHART
             graphChartConfig:
               visualization:
                 themeColor: DEFAULT
                 seriesType: LINE
               metrics:
-                - metricSelector: deliveries.count:splitBy("success")
-                  visualization:
-                    displayName: Success / Failure
+                - metricSelector: deliveries.count:filter(eq(success,false))
   - entityType: SERVICE
     detailsInjections:
-      - type: CHART_GROUP
+      - type: ENTITIES_LIST
         key: orders
         conditions:
           - entityAttribute|entityName=DeliveriesController
-    chartsCards:
+    entitiesListCards:
       - key: orders
         displayName: Tacos deliveries
         numberOfVisibleCharts: 2
+        pageSize: 5
+        entitiesLimit: 500
+        displayCharts: true
+        enableDetailsExpandability: false
+        displayIcons: true
+        entitySelectorTemplate: type(dt.entity.cloud_application),toRelationships.isServiceOf($(entityConditions))
         charts:
-          - displayName: orders
+          - displayName: Successful orders
             visualizationType: GRAPH_CHART
             graphChartConfig:
               visualization:
                 themeColor: DEFAULT
                 seriesType: LINE
               metrics:
-                - metricSelector: orders.count
-          - displayName: tacos delivered
+                - metricSelector: deliveries.count:filter(eq(success,true))
+          - displayName: Failed orders
             visualizationType: GRAPH_CHART
             graphChartConfig:
               visualization:
                 themeColor: DEFAULT
                 seriesType: LINE
               metrics:
-                - metricSelector: deliveries.count:splitBy("success")
-                  visualization:
-                    displayName: Success / Failure
+                - metricSelector: deliveries.count:filter(eq(success,false))
