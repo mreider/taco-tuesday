@@ -41,7 +41,8 @@ tracer = trace.get_tracer(__name__)
 def do_constantly():
     with tracer.start_as_current_span("orders"):
         tacos = random.randrange(1, 6)
-        resp = requests.get(url="http://orders-internal:8080/orderTacos/" + str(tacos))
+        headers = {'Accept': 'text/plain'}
+        resp = requests.get(url="http://orders-internal:8080/" + str(tacos),headers=headers)
         logging.info(resp.status_code)
 
 schedule.every(7).seconds.do(do_constantly)
